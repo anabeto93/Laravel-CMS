@@ -50,7 +50,7 @@
 
                 <!-- Pager -->
                 <div class="clearfix mt-4">
-{{--                    {!! $posts->links() !!}--}}
+                    {!! $posts->links() !!}
                 </div>
             </div>
 
