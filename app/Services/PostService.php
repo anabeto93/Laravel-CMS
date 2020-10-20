@@ -3,6 +3,7 @@
 namespace App\Services;
 
 
+use App\Models\Category;
 use App\Repositories\Post\PostContract;
 
 class PostService
@@ -25,5 +26,10 @@ class PostService
         if (!$slug) return null;
 
         return $this->post->findBySlug($slug);
+    }
+
+    public function getCategoryPosts(Category $category)
+    {
+        return $this->post->getCategoryPosts($category);
     }
 }

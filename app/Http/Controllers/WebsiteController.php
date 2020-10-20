@@ -38,4 +38,17 @@ class WebsiteController extends Controller
         }
         return view('website.post')->withPost($post);
     }
+
+    public function category($slug)
+    {
+        $category = $this->categoryService->findBySlug($slug);
+
+        if (!$category) {
+            abort(404);
+        }
+
+        $posts = $this->postService->getCategoryPosts($category);
+
+        return view('website.category')->withCategory($category)->withPosts($posts);
+    }
 }

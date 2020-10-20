@@ -19,4 +19,11 @@ class CategoryService
     {
         return $this->category->publishedCategories();
     }
+
+    public function findBySlug(string $slug)
+    {
+        if (!$slug) return null;
+
+        return $this->category->findBySlug($slug);
+    }
 }

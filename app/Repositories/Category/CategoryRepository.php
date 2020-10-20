@@ -15,4 +15,9 @@ class CategoryRepository implements CategoryContract
     {
         return Category::published()->orderBy('name', 'ASC')->get();
     }
+
+    public function findBySlug(string $slug)
+    {
+        return Category::published()->where('slug', $slug)->first();
+    }
 }
