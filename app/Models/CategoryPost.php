@@ -10,4 +10,9 @@ class CategoryPost extends Model
     use HasFactory;
 
     protected $fillable = ['category_id', 'post_id'];
+
+    public function scopePublished($query)
+    {
+        return $query->where('is_published', '1');
+    }
 }

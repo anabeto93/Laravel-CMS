@@ -20,4 +20,9 @@ class Post extends Model
     {
         return $this->belongsToMany(Category::class, 'category_posts');
     }
+
+    public function scopePublished($query)
+    {
+        return $query->where('is_published', '1');
+    }
 }
