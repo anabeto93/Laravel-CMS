@@ -32,6 +32,18 @@ class CategoriesTableSeeder extends Seeder
                 'slug' => 'python',
                 'is_published' => '1',
             ],
+            [
+                'user_id' => '1',
+                'name' => 'Javascript',
+                'slug' => 'javascript',
+                'is_published' => '1',
+            ],
+            [
+                'user_id' => '1',
+                'name' => 'Django',
+                'slug' => 'django',
+                'is_published' => '1',
+            ]
         ]);
     }
 }
