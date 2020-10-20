@@ -22,6 +22,14 @@
     <link href="{{ asset('website/css/clean-blog.min.css') }}" rel="stylesheet">
 
     <style>
+        .page-link {
+            color: #00657b;
+            text-align: center;
+        }
+        .page-item.active .page-link {
+            background-color: #00657b;
+            border-color: #00657b;
+        }
         .category-list {
             padding: 0;
             margin: 0;
@@ -110,11 +118,11 @@
 </footer>
 
 <!-- Bootstrap core JavaScript -->
-<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('website/vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('website/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
 <!-- Custom scripts for this template -->
-<script src="{{ asset('js/clean-blog.min.js') }}"></script>
+<script src="{{ asset('website/js/clean-blog.min.js') }}"></script>
 @stack('scripts')
 
 </body>
