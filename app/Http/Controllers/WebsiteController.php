@@ -27,4 +27,15 @@ class WebsiteController extends Controller
 
         return view('website.index')->withPosts($posts)->withCategories($categories);
     }
+
+    public function post($slug)
+    {
+        $post = $this->postService->findBySlug($slug);
+
+        if (!$post) {
+            //return view('website.errors.404', [], 404);
+            abort(404);
+        }
+        return view('website.post')->withPost($post);
+    }
 }

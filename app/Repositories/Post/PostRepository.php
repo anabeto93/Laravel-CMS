@@ -11,4 +11,9 @@ class PostRepository implements PostContract
     {
         return Post::published()->where('post_type', 'post')->orderBy('id', 'DESC')->paginate(5);
     }
+
+    public function findBySlug(string $slug)
+    {
+        return Post::published()->where('slug', $slug)->where('post_type', 'post')->first();
+    }
 }

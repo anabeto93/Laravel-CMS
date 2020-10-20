@@ -19,4 +19,11 @@ class PostService
     {
         return $this->post->publishedPosts();
     }
+
+    public function findBySlug(string $slug)
+    {
+        if (!$slug) return null;
+
+        return $this->post->findBySlug($slug);
+    }
 }
