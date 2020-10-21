@@ -3,11 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class CategoryController extends Controller
 {
+    /** @var CategoryService */
+    private $categoryService;
+
+    public function __construct(CategoryService $categoryService) 
+    {
+        $this->categoryService = $categoryService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +23,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = $this->categoryService->all(true);
+
+        return view('admin.category.index')->withCategories($categories);
     }
 
     /**
@@ -25,7 +35,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.category.create');
     }
 
     /**
