@@ -20,4 +20,21 @@ class CategoryRepository implements CategoryContract
     {
         return Category::published()->where('slug', $slug)->first();
     }
+
+    public function all($limit=null)
+    {
+        if (!$limit) {
+            return Category::all();
+        }
+
+        return Category::limit($limit)->get();
+    }
+
+    public function latest($limit=null)
+    {
+        if (!$limit) {
+            return Category::latest()->get();
+        }
+        return Category::latest()->limit($limit)->get();
+    }
 }

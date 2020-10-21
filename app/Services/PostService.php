@@ -32,4 +32,13 @@ class PostService
     {
         return $this->post->getCategoryPosts($category);
     }
+
+    public function all($type='post', $latest=false, $limit=null)
+    {
+        if (!$latest) {
+            return $this->post->all($type, $limit);
+        }
+
+        return $this->post->latest($type, $limit);
+    }
 }

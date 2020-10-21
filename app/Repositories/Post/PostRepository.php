@@ -5,6 +5,7 @@ namespace App\Repositories\Post;
 
 use App\Models\Category;
 use App\Models\Post;
+use Debugbar;
 
 class PostRepository implements PostContract
 {
@@ -24,5 +25,23 @@ class PostRepository implements PostContract
     public function getCategoryPosts($category)
     {
         return $category->posts()->published()->orderBy('posts.id', 'DESC')->paginate(5);
+    }
+
+    public function all($type='post', $limit=null)
+    {
+        if (!$limit) {
+            return Post::where('post_type', $type)->get();
+        }
+
+        return Post::where('post_type', $type)->limit($limit)->get();
+    }
+
+    public function latest($type='post', $limit=null)
+    {
+        if (!$limit) {
+            return Post::where('post_type', $type)->latest()->get();
+        }
+
+        return Post::latest()->where('post_type', $type)->limit($limit)->get();
     }
 }

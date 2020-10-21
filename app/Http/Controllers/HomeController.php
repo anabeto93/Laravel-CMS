@@ -2,18 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CategoryService;
+use App\Services\PostService;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    /** @var CategoryService  */
+    private $categoryService;
+
+    /** @var PostService  */
+    private $postService;
+
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param CategoryService $categoryService
+     * @param PostService $postService
      */
-    public function __construct()
+    public function __construct(CategoryService $categoryService, PostService $postService)
     {
         $this->middleware('auth');
+        $this->categoryService = $categoryService;
+        $this->postService = $postService;
     }
 
     /**
@@ -23,6 +34,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $categories = $this->categoryService->all(true, 3);
+        $posts = $this->postService->all('post',true, 3);
+        $pages = $this->postService->all('page', true, 3);
+        return view('admin.index')->withCategories($categories)->withPosts($posts)->withPages($pages);
     }
 }

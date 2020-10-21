@@ -8,4 +8,8 @@ interface CategoryContract
     public function publishedCategories();
 
     public function findBySlug(string $slug);
+
+    public function all($limit=null);
+
+    public function latest($limit=null);
 }

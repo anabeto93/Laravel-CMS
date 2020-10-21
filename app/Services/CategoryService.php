@@ -26,4 +26,13 @@ class CategoryService
 
         return $this->category->findBySlug($slug);
     }
+
+    public function all($latest=false, $limit=null)
+    {
+        if (!$latest) {
+            return $this->category->all($limit);
+        }
+
+        return $this->category->latest($limit);
+    }
 }

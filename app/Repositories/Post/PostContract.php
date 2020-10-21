@@ -10,4 +10,8 @@ interface PostContract
     public function findBySlug(string $slug);
 
     public function getCategoryPosts($category);
+
+    public function all($type='post', $limit=null);
+
+    public function latest($type='post', $limit=null);
 }
