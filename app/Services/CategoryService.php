@@ -50,4 +50,14 @@ class CategoryService
 
         return $this->category->create($data);
     }
+
+    /**
+     * @param string|int $id
+     */
+    public function delete($id) : void
+    {
+        $this->category->delete($id);
+
+        Session::flash('message', 'Category deleted.');
+    }
 }

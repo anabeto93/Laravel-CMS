@@ -14,4 +14,8 @@ interface CategoryContract
     public function latest($limit=null);
 
     public function create(array $properties);
+
+    public function delete($id);
+
+    public function find(int $id);
 }

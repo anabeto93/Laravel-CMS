@@ -66,7 +66,7 @@ class CategoryController extends Controller
      * @param string|int $id
      * @return Response
      */
-    public function show(string $id)
+    public function show($id)
     {
         //
     }
@@ -77,7 +77,7 @@ class CategoryController extends Controller
      * @param string|int $id
      * @return Response
      */
-    public function edit(string $id)
+    public function edit($id)
     {
         //
     }
@@ -100,8 +100,10 @@ class CategoryController extends Controller
      * @param string|int $id
      * @return Response
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $this->categoryService->delete($id);
+
+        return redirect()->to(route('categories.index'));
     }
 }

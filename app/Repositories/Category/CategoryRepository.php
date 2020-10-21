@@ -47,4 +47,17 @@ class CategoryRepository implements CategoryContract
 
         return $category;
     }
+
+
+    public function delete($id) 
+    {
+        $category = Category::find($id);
+
+        $category->delete();
+    }
+
+    public function find(int $id) 
+    {
+        return Category::find($id);
+    }
 }
