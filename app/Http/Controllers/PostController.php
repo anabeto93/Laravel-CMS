@@ -87,7 +87,19 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = $this->postService->find($id);
+
+        if (!$post) {
+            abort(404);
+        }
+        
+        $categories = $this->categoryService->all();
+
+        if ($categories) {
+            $categories = $categories->pluck('name', 'id');
+        }
+
+        return view('admin.post.edit')->withPost($post)->withCategories($categories);
     }
 
     /**
@@ -99,7 +111,16 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'thumbnail' => ['required',],
+            'title' => ['required', 'unique:posts,id,' . $id, ],
+            'details' => ['required', ],
+            'categories' => ['required', ],
+        ]);
+
+        $post = $this->postService->update($id, $request);
+
+        return redirect()->to(route('posts.index'));
     }
 
     /**
@@ -110,6 +131,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->postService->delete($id);
+
+        return redirect()->to(route('posts.index'));
     }
 }

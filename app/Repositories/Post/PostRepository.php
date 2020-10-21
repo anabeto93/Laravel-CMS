@@ -76,17 +76,35 @@ class PostRepository implements PostContract
         $post = Post::create($properties);
 
         if (array_key_exists('categories', $properties) && is_array(($cats = $properties['categories']))) {
-            /*$id = $post->id;//to reduce accessing it everytime
-
-            foreach($cats as $cat) {
-                CategoryPost::create([
-                    'post_id' => $id,
-                    'category_id' => $cat,
-                ]);
-            }*/
             $post->categories()->sync($cats, false);
         }
 
         return $post;
+    }
+    public function find(int $id) 
+    {
+        return Post::find($id);
+    }
+
+    public function update(int $id, array $properties)
+    {
+        $post = $this->find($id);
+
+        if (!$post) {
+            $post = $this->create($properties);
+        } else {
+            $post->update($properties);
+        }
+
+        return $post;
+    }
+
+    public function delete(int $id)
+    {
+        $post = $this->find($id);
+
+        if ($post) {
+            $post->delete();
+        }
     }
 }

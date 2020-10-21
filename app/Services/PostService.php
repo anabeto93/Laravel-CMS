@@ -56,4 +56,32 @@ class PostService
 
         return $this->post->create($data);
     }
+
+    /**
+     * @param string|int $id
+     */
+    public function find($id)
+    {
+        return $this->post->find((int) $id);
+    }
+
+    public function update($id, Request $request) 
+    {
+        $data = $request->only('thumbnail', 'title', 'details', 'categories', 'sub_title', 'is_published', 'slug');
+
+        if (!array_key_exists('slug', $data)) {
+            $data['slug'] = str_slug($data['title']);
+        }
+
+        Session::flash('message', 'Post successfully updated.');
+
+        return $this->post->update((int) $id, $data);
+    }
+
+    public function delete($id): void
+    {
+        $this->post->delete($id);
+
+        Session::flash('message', 'Post successfully deleted.');
+    }
 }
