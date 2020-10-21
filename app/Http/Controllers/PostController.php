@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -42,10 +41,10 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Post $post
+     * @param string|int $id
      * @return Response
      */
-    public function show(Post $post)
+    public function show(string $id)
     {
         //
     }
@@ -53,10 +52,10 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Post $post
+     * @param string|int $id
      * @return Response
      */
-    public function edit(Post $post)
+    public function edit(string $id)
     {
         //
     }
@@ -65,10 +64,10 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param Post $post
+     * @param string|int $id
      * @return Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -76,10 +75,10 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Post $post
+     * @param string|int $id
      * @return Response
      */
-    public function destroy(Post $post)
+    public function destroy(string $id)
     {
         //
     }
