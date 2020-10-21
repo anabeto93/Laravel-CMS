@@ -27,19 +27,37 @@ class PostRepository implements PostContract
         return $category->posts()->published()->orderBy('posts.id', 'DESC')->paginate(5);
     }
 
-    public function all($type='post', $limit=null)
+    public function all($type='post', $limit=null, $paginate=false, $page_count=25)
     {
         if (!$limit) {
+            if ($paginate) {
+                return Post::where('post_type', $type)->paginate($page_count);
+            }
+
             return Post::where('post_type', $type)->get();
+        }
+
+        if ($paginate) {
+            return Post::where('post_type', $type)->limit($limit)->paginate($page_count);
         }
 
         return Post::where('post_type', $type)->limit($limit)->get();
     }
 
-    public function latest($type='post', $limit=null)
+    public function latest($type='post', $limit=null, $paginate=false, $page_count=25)
     {
         if (!$limit) {
+
+            if ($paginate) {
+                return Post::where('post_type', $type)->latest()->paginate($page_count);
+            }
+
             return Post::where('post_type', $type)->latest()->get();
+        }
+
+        if ($paginate) {
+
+            return Post::latest()->where('post_type', $type)->limit($limit)->paginate($page_count);
         }
 
         return Post::latest()->where('post_type', $type)->limit($limit)->get();

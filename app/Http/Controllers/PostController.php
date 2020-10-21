@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\PostService;
 use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
+    /** @var PostService */
+    private $postService;
+
+    public function __construct(PostService $postService)
+    {
+        $this->postService = $postService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = $this->postService->all('post', true, null, true);
+        
+        return view('admin.post.index')->withPosts($posts);
     }
 
     /**

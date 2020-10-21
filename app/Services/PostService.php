@@ -33,12 +33,12 @@ class PostService
         return $this->post->getCategoryPosts($category);
     }
 
-    public function all($type='post', $latest=false, $limit=null)
+    public function all($type='post', $latest=false, $limit=null, $paginate=false)
     {
         if (!$latest) {
-            return $this->post->all($type, $limit);
+            return $this->post->all($type, $limit, $paginate);
         }
 
-        return $this->post->latest($type, $limit);
+        return $this->post->latest($type, $limit, $paginate);
     }
 }

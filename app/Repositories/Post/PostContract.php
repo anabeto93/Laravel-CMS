@@ -11,7 +11,7 @@ interface PostContract
 
     public function getCategoryPosts($category);
 
-    public function all($type='post', $limit=null);
+    public function all($type='post', $limit=null, $paginate=false, $page_count=25);
 
-    public function latest($type='post', $limit=null);
+    public function latest($type='post', $limit=null, $paginate=false, $page_count=25);
 }
