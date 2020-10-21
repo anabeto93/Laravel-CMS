@@ -15,7 +15,6 @@
             </div>
         </div>
     </header>
-    @stack('styles')
 
     <!-- Main Content -->
     <div class="container">

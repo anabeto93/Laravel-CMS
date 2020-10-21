@@ -45,6 +45,8 @@
             text-decoration: none;
         }
     </style>
+
+    @stack('styles')
 </head>
 
 <body>

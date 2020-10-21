@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
 use App\Services\PostService;
 use Illuminate\Http\Response;
@@ -11,9 +12,13 @@ class PostController extends Controller
     /** @var PostService */
     private $postService;
 
-    public function __construct(PostService $postService)
+    /** @var CategoryService */
+    private $categoryService;
+
+    public function __construct(PostService $postService, CategoryService $categoryService)
     {
         $this->postService = $postService;
+        $this->categoryService = $categoryService;
     }
     /**
      * Display a listing of the resource.
@@ -34,7 +39,13 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = $this->categoryService->all();
+
+        if ($categories) {
+            $categories = $categories->pluck('name', 'id');
+        }
+
+        return view('admin.post.create')->withCategories($categories);
     }
 
     /**
