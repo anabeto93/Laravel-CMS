@@ -48,6 +48,19 @@ class CategoryRepository implements CategoryContract
         return $category;
     }
 
+    public function update(int $id, array $properties) 
+    {
+        $category = Category::find($id);
+
+        if (!$category) {
+            return $this->create($properties);
+        }
+
+        $category->update($properties);
+
+        return $category->fresh();
+    }
+
 
     public function delete($id) 
     {

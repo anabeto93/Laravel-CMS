@@ -79,7 +79,13 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = $this->categoryService->find($id);
+
+        if (!$category) {
+            abort(404);
+        }
+
+        return view('admin.category.edit')->withCategory($category);
     }
 
     /**
@@ -89,9 +95,21 @@ class CategoryController extends Controller
      * @param string|int $id
      * @return Response
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'thumbnail' => ['required',],
+            'name' => ['required', 'unique:categories,name,' . $id],
+            'is_published' => ['required',],
+        ], [
+            'thumbnail.required' => 'Enter thumbnail url',
+            'name.required' => 'Category name is required.',
+            'name.unique' => 'Category name already exists.',
+        ]);
+
+        $category = $this->categoryService->update($id, $request);
+
+        return redirect()->to(route('categories.index'));
     }
 
     /**

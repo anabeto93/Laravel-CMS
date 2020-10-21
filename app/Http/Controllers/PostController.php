@@ -67,7 +67,7 @@ class PostController extends Controller
      * @param string|int $id
      * @return Response
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         //
     }

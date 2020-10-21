@@ -18,4 +18,6 @@ interface CategoryContract
     public function delete($id);
 
     public function find(int $id);
+
+    public function update(int $id, array $properties);
 }

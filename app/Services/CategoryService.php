@@ -22,6 +22,14 @@ class CategoryService
         return $this->category->publishedCategories();
     }
 
+    /**
+     * @param string|int $id
+     */
+    public function find($id)
+    {
+        return $this->category->find((int) $id);
+    }
+
     public function findBySlug(string $slug)
     {
         if (!$slug) return null;
@@ -49,6 +57,19 @@ class CategoryService
         Session::flash('message', 'Category successfully created.');
 
         return $this->category->create($data);
+    }
+
+    public function update($id, Request $request)
+    {
+        $data = $request->only('thumbnail', 'name', 'is_published', 'slug');
+
+        if (!array_key_exists('slug', $data)) {
+            $data['slug'] = str_slug($data['name']);
+        }
+        
+        Session::flash('message', 'Category updated.');
+
+        return $this->category->update((int) $id, $data);
     }
 
     /**
