@@ -76,14 +76,15 @@ class PostRepository implements PostContract
         $post = Post::create($properties);
 
         if (array_key_exists('categories', $properties) && is_array(($cats = $properties['categories']))) {
-            $id = $post->id;//to reduce accessing it everytime
+            /*$id = $post->id;//to reduce accessing it everytime
 
             foreach($cats as $cat) {
                 CategoryPost::create([
                     'post_id' => $id,
                     'category_id' => $cat,
                 ]);
-            }
+            }*/
+            $post->categories()->sync($cats, false);
         }
 
         return $post;
