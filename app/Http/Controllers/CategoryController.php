@@ -46,7 +46,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'thumbnail' => ['required',],
+            'name' => ['required', 'unique:categories',],
+            'is_published' => ['required',],
+        ], [
+            'thumbnail.required' => 'Enter thumbnail url',
+            'name.required' => 'Category name is required.',
+            'name.unique' => 'Category name already exists.',
+        ]);
+
+        $category = $this->categoryService->create($request);
+
+        return redirect()->to(route('categories.index'));
     }
 
     /**

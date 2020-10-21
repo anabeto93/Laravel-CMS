@@ -5,6 +5,7 @@ namespace App\Repositories\Category;
 
 use App\Models\Category;
 use App\Models\CategoryPost;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryRepository implements CategoryContract
 {
@@ -36,5 +37,14 @@ class CategoryRepository implements CategoryContract
             return Category::latest()->get();
         }
         return Category::latest()->limit($limit)->get();
+    }
+
+    public function create(array $properties) 
+    {
+        $properties = array_merge($properties, ['user_id' => Auth::id(), ]);
+
+        $category = Category::create($properties);
+
+        return $category;
     }
 }

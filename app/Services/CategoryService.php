@@ -4,6 +4,8 @@ namespace App\Services;
 
 
 use App\Repositories\Category\CategoryContract;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CategoryService
 {
@@ -34,5 +36,18 @@ class CategoryService
         }
 
         return $this->category->latest($limit);
+    }
+
+    public function create(Request $request)
+    {
+        $data = $request->only('thumbnail', 'name', 'is_published', 'slug');
+
+        if (!array_key_exists('slug', $data)) {
+            $data['slug'] = str_slug($data['name']);
+        }
+        
+        Session::flash('message', 'Category successfully created.');
+
+        return $this->category->create($data);
     }
 }

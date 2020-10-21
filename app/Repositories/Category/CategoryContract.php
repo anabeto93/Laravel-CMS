@@ -12,4 +12,6 @@ interface CategoryContract
     public function all($limit=null);
 
     public function latest($limit=null);
+
+    public function create(array $properties);
 }

@@ -15,7 +15,7 @@
                             {!! Form::label('Thumbnail') !!}
                             {!! Form::text('thumbnail', null, ['class' => 'form-control', 'placeholder' => 'Thumbnail']) !!}
                             @if($errors->has('thumbnail')) 
-                                <span class="help-block">
+                                <span class="help-block text-danger">
                                     {!! $errors->first('thumbnail') !!}
                                 </span>
                             @endif
@@ -24,7 +24,7 @@
                             {!! Form::label('Name') !!}
                             {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Name']) !!}
                             @if($errors->has('name')) 
-                                <span class="help-block">
+                                <span class="help-block text-danger">
                                     {!! $errors->first('name') !!}
                                 </span>
                             @endif
