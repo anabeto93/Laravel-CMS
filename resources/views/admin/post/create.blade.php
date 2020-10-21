@@ -58,7 +58,7 @@
                         </div>
                         <div class="form-group">
                             {!! Form::label('Publish') !!}
-                            {!! Form::select('is_published', [1 => 'Publish', 0 => 'Draft'], null, ['class' => 'form-control']) !!}
+                            {!! Form::select('is_published', [1 => 'Publish', 0 => 'Draft'], null, ['class' => 'form-control', 'id' => 'published']) !!}
                         </div>
                         {!! Form::submit('Create', ['class' => 'btn btn-primary']) !!}
                         {!! Form::close() !!}
@@ -80,15 +80,14 @@
             CKEDITOR.replace('details');
             
             console.log("JQuery is working", $('#category_id'));
+        });
 
-            // $('#category_id').select2({
-            //     placeholder: "Select categories"
-            // });
+        $.each(['#category_id', '#published'], (i, id) => {
+            $(id).select2({
+                placeholder: "Select categories"
+            })
         });
-        
-        $('#category_id').select2({
-            placeholder: "Select categories"
-        });
+
     </script>
 @endpush
 

@@ -5,6 +5,8 @@ namespace App\Services;
 
 use App\Models\Category;
 use App\Repositories\Post\PostContract;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PostService
 {
@@ -40,5 +42,18 @@ class PostService
         }
 
         return $this->post->latest($type, $limit, $paginate);
+    }
+
+    public function create(Request $request)
+    {
+        $data = $request->only('thumbnail', 'title', 'details', 'categories', 'sub_title', 'is_published', 'slug');
+
+        if (!array_key_exists('slug', $data)) {
+            $data['slug'] = str_slug($data['title']);
+        }
+
+        Session::flash('message', 'Post successfully created.');
+
+        return $this->post->create($data);
     }
 }

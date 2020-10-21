@@ -3,9 +3,11 @@
 namespace App\Repositories\Post;
 
 
-use App\Models\Category;
-use App\Models\Post;
 use Debugbar;
+use App\Models\Post;
+use App\Models\Category;
+use App\Models\CategoryPost;
+use Illuminate\Support\Facades\Auth;
 
 class PostRepository implements PostContract
 {
@@ -61,5 +63,29 @@ class PostRepository implements PostContract
         }
 
         return Post::latest()->where('post_type', $type)->limit($limit)->get();
+    }
+
+    public function create(array $properties) 
+    {
+        $properties['user_id'] = Auth::id();
+
+        if (!array_key_exists('post_type', $properties)) {
+            $properties['post_type'] = 'post';
+        }
+        
+        $post = Post::create($properties);
+
+        if (array_key_exists('categories', $properties) && is_array(($cats = $properties['categories']))) {
+            $id = $post->id;//to reduce accessing it everytime
+
+            foreach($cats as $cat) {
+                CategoryPost::create([
+                    'post_id' => $id,
+                    'category_id' => $cat,
+                ]);
+            }
+        }
+
+        return $post;
     }
 }

@@ -56,7 +56,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'thumbnail' => ['required',],
+            'title' => ['required', 'unique:posts', ],
+            'details' => ['required', ],
+            'categories' => ['required', ],
+        ]);
+
+        $post = $this->postService->create($request);
+
+        return redirect()->to(route('posts.index'));
     }
 
     /**
