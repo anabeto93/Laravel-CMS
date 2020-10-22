@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Services\GalleryService;
 
 class GalleryController extends Controller
 {
+    /** @var GalleryService */
+    private $galleryService;
+
+    public function __construct(GalleryService $galleryService)
+    {
+        $this->galleryService = $galleryService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,9 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        //
+        $galleries = $this->galleryService->all(true);
+
+        return view('admin.gallery.index')->withGalleries($galleries);
     }
 
     /**
@@ -24,7 +35,7 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.gallery.create');
     }
 
     /**
@@ -35,7 +46,15 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'image_url' => ['required',],
+        ], [
+            'image_url.required' => 'Select image.',
+        ]);
+
+        $gallery = $this->galleryService->create($request);
+
+        return redirect()->to(route('galleries.index'));
     }
 
     /**
