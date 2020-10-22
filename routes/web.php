@@ -30,7 +30,7 @@ Route::get('category/{slug}', [WebsiteController::class, 'category'])->name('cat
 Route::get('post/{slug}', [WebsiteController::class, 'post'])->name('post');
 Route::get('page/{slug}', [WebsiteController::class, 'page'])->name('page');
 Route::get('contact', [WebsiteController::class, 'showContactForm'])->name('contact.show');
-Route::post('contact', [WebsiteController::class, 'contact'])->name('contact.create');
+Route::post('contact', [WebsiteController::class, 'contact'])->name('contact.store');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 

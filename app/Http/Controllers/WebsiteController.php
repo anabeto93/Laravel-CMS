@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ContactService;
 use App\Services\PostService;
 use Illuminate\Http\Request;
 use App\Services\CategoryService;
@@ -14,10 +15,14 @@ class WebsiteController extends Controller
     /** @var PostService */
     private $postService;
 
-    public function __construct(CategoryService $categoryService, PostService $postService)
+    /** @var ContactService  */
+    private $contactService;
+
+    public function __construct(CategoryService $categoryService, PostService $postService, ContactService $contactService)
     {
         $this->categoryService = $categoryService;
         $this->postService = $postService;
+        $this->contactService = $contactService;
     }
 
     public function index()
@@ -65,6 +70,20 @@ class WebsiteController extends Controller
 
     public function showContactForm()
     {
+        return view('website.contact');
+    }
 
+    public function contact(Request $request)
+    {
+        $request->validate([
+            'name' => ['required',],
+            'email' => ['required', 'email',],
+            'phone' => ['required',],
+            'message' => ['required',],
+        ]);
+
+        $this->contactService->sendMail($request);
+
+        return redirect()->to(route('contact.show'));
     }
 }
