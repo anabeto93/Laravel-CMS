@@ -4,6 +4,7 @@ namespace App\Repositories\Gallery;
 
 use App\Models\Gallery;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class GalleryRepository implements GalleryContract 
 {
@@ -82,6 +83,11 @@ class GalleryRepository implements GalleryContract
         $gallery = $this->find($id);
 
         if ($gallery instanceof Gallery) {
+            $link = $gallery->image_url;
+
+             //also delete it from storage
+            Storage::delete('public/galleries/' . $link);
+            
             $gallery->delete();
         }
     }
