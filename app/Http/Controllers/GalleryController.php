@@ -76,7 +76,13 @@ class GalleryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $gallery = $this->galleryService->find($id);
+
+        if (!$gallery) {
+            abort(404);
+        }
+
+        return view('admin.gallery.edit')->withGallery($gallery);
     }
 
     /**
@@ -88,7 +94,15 @@ class GalleryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'image_url' => ['required',],
+        ], [
+            'image_url.required' => 'Select image.',
+        ]);
+
+        $gallery = $this->galleryService->update($id, $request);
+
+        return redirect()->to(route('galleries.index'));
     }
 
     /**
@@ -99,6 +113,8 @@ class GalleryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->galleryService->delete($id);
+
+        return redirect()->to(route('galleries.index'));
     }
 }

@@ -44,12 +44,45 @@ class GalleryRepository implements GalleryContract
         $galleries = Gallery::insert($images);
 
         if ($galleries) {
-            
+
             $urls = collect($images)->pluck('image_url')->toArray();
 
             return Gallery::whereIn('image_url', $urls)->latest()->limit(count($urls))->get();
         }
 
         return $galleries;
+    }
+
+    public function find(int $id) 
+    {
+        return Gallery::find($id);
+    }
+
+    public function update(int $id, array $details) 
+    {
+        $gallery = $this->find($id);
+
+        if (!$gallery) {
+            $details['user_id'] = Auth::id();
+
+            $gallery = Gallery::create($details);
+        } else {
+            $gallery->update($details);
+        }
+
+        if ($gallery instanceof Gallery) {
+            return $gallery->fresh();
+        }
+
+        return $gallery;
+    }
+
+    public function delete(int $id): void
+    {
+        $gallery = $this->find($id);
+
+        if ($gallery instanceof Gallery) {
+            $gallery->delete();
+        }
     }
 }

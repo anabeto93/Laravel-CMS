@@ -14,7 +14,7 @@
                             {{ method_field('PUT') }}                    
                             <div class="form-group @if($errors->has('image_url')) has-error @endif">
                                 {!! Form::label('Image Url', 'image_url', ['style' => 'display: block;',]) !!}
-                                {!! Form::file('image_url[]', ['multiple' => 'multiple']) !!}
+                                {!! Form::file('image_url[]', []) !!}
                                 @if ($errors->has('details'))
                                     <span class="help-block">{!! $errors->first('image_url') !!}</span>
                                 @endif

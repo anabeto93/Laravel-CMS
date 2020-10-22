@@ -64,4 +64,61 @@ class GalleryService
 
         return $galleries;
     }
+
+    /**
+     * @param string|int $id
+     */
+    public function find($id) 
+    {
+        return $this->gallery->find((int) $id);
+    }
+
+    /**
+     * @param string|int $id
+     */
+    public function delete($id): void
+    {
+        $this->gallery->delete($id);
+
+        Session::flash('message', 'Image successfully deleted.');
+    }
+
+    /**
+     * @param string|int $id
+     * @param Request $request
+     */
+    public function update($id, Request $request)
+    {
+        $images = $request->image_url;
+
+        $data = [];
+
+        foreach($images as $i => $image_url) {
+            $original_file = $image_url->getClientOriginalName();
+
+            $file_name = strtolower(implode('_', explode(' ', trim(pathinfo($original_file, PATHINFO_FILENAME)))));
+
+            $file_ext = $image_url->getClientOriginalExtension();
+
+            $fn = $file_name . '.' . $file_ext;
+
+            //don't waste db records updating something that has not changed,
+            $data['image_url'] = $fn;
+
+            if ($i == 0) {//only the first one matters
+            break;
+            }
+        }
+
+        $saved = $this->gallery->update((int) $id, $data);
+
+        if ($saved) {
+
+            $image_url->storeAs('public/galleries', $saved->image_url);
+        }
+
+        Session::flash('message', 'Image updated successfully.');
+
+        return  $saved;
+    }
 }
