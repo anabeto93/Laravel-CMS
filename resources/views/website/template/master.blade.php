@@ -64,14 +64,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/') }}">Home</a>
                 </li>
+                @php($pages = getPages())
+                @foreach($pages as $page)
                 <li class="nav-item">
-                    <a class="nav-link" href="about.html">About</a>
+                    <a class="nav-link" href="{{ route('pages.show', ['page' => $page->slug,]) }}">{{ $page->title }}</a>
                 </li>
+                @endforeach
                 <li class="nav-item">
-                    <a class="nav-link" href="post.html">Sample Post</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
+                    <a class="nav-link" href="{{ route('contact.show') }}">Contact</a>
                 </li>
             </ul>
         </div>

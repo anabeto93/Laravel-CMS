@@ -7,7 +7,7 @@ interface PostContract
 {
     public function publishedPosts();
 
-    public function findBySlug(string $slug);
+    public function findBySlug(string $slug, string $type='post');
 
     public function getCategoryPosts($category);
 

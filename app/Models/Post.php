@@ -25,4 +25,9 @@ class Post extends Model
     {
         return $query->where('is_published', '1');
     }
+
+    public function scopeIsPage($query) 
+    {
+        return $query->where('post_type', 'page');
+    }
 }

@@ -23,11 +23,11 @@ class PostService
         return $this->post->publishedPosts();
     }
 
-    public function findBySlug(string $slug)
+    public function findBySlug(string $slug, $type='post')
     {
         if (!$slug) return null;
 
-        return $this->post->findBySlug($slug);
+        return $this->post->findBySlug($slug, $type);
     }
 
     public function getCategoryPosts(Category $category)
