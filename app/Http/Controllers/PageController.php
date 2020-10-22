@@ -3,10 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\PostService;
 use Illuminate\Http\Response;
+use App\Services\CategoryService;
 
 class PageController extends Controller
 {
+    /** @var PostService */
+    private $postService;
+
+    /** @var CategoryService */
+    private $categoryService;
+
+    public function __construct(PostService $postService, CategoryService $categoryService)
+    {
+        $this->postService = $postService;
+        $this->categoryService = $categoryService;
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +28,9 @@ class PageController extends Controller
      */
     public function index()
     {
-        //
+        $posts = $this->postService->all('page', true, null, true);
+        
+        return view('admin.page.index')->withPages($posts);
     }
 
     /**
@@ -24,7 +40,13 @@ class PageController extends Controller
      */
     public function create()
     {
-        //
+        $categories = $this->categoryService->all();
+
+        if ($categories) {
+            $categories = $categories->pluck('name', 'id');
+        }
+
+        return view('admin.page.create')->withCategories($categories);
     }
 
     /**
@@ -35,7 +57,24 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "thumbnail" => 'required',
+            "title" => 'required|unique:posts',
+            "details" => "required",
+        ],
+            [
+                'thumbnail.required' => 'Enter thumbnail url',
+                'title.required' => 'Enter title',
+                'title.unique' => 'Title already exist',
+                'details.required' => 'Enter details',
+            ]
+        );
+
+        $request->merge(['post_type' => 'page']);
+
+        $page = $this->postService->create($request);
+
+        return redirect()->to(route('pages.index'));
     }
 
     /**
@@ -57,7 +96,19 @@ class PageController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = $this->postService->find($id);
+
+        if (!$post) {
+            abort(404);
+        }
+        
+        $categories = $this->categoryService->all();
+
+        if ($categories) {
+            $categories = $categories->pluck('name', 'id');
+        }
+
+        return view('admin.page.edit')->withPage($post)->withCategories($categories);
     }
 
     /**
@@ -69,7 +120,23 @@ class PageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            "thumbnail" => 'required',
+            'title' => 'required|unique:posts,title,' . $id . ',id',
+            'details' => 'required',
+            ],
+            [
+                'thumbnail.required' => 'Enter thumbnail url',
+                'title.required' => 'Enter title',
+                'title.unique' => 'Title already exist',
+                'details.required' => 'Enter details',
+        ]);
+
+        $request->merge(['post_type' => 'page']);
+
+        $post = $this->postService->update($id, $request);
+
+        return redirect()->to(route('pages.index'));
     }
 
     /**
@@ -80,6 +147,8 @@ class PageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->postService->delete($id);
+
+        return redirect()->to(route('pages.index'));
     }
 }

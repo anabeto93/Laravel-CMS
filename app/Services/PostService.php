@@ -46,7 +46,7 @@ class PostService
 
     public function create(Request $request)
     {
-        $data = $request->only('thumbnail', 'title', 'details', 'categories', 'sub_title', 'is_published', 'slug');
+        $data = $request->only('thumbnail', 'title', 'details', 'categories', 'sub_title', 'is_published', 'slug', 'post_type');
 
         if (!array_key_exists('slug', $data)) {
             $data['slug'] = str_slug($data['title']);
@@ -67,7 +67,7 @@ class PostService
 
     public function update($id, Request $request) 
     {
-        $data = $request->only('thumbnail', 'title', 'details', 'categories', 'sub_title', 'is_published', 'slug');
+        $data = $request->only('thumbnail', 'title', 'details', 'categories', 'sub_title', 'is_published', 'slug', 'post_type');
 
         if (!array_key_exists('slug', $data)) {
             $data['slug'] = str_slug($data['title']);
