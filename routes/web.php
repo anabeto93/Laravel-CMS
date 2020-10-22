@@ -29,8 +29,8 @@ Route::get('/', [WebsiteController::class, 'index'])->name('index');
 Route::get('category/{slug}', [WebsiteController::class, 'category'])->name('category');
 Route::get('post/{slug}', [WebsiteController::class, 'post'])->name('post');
 Route::get('page/{slug}', [WebsiteController::class, 'page'])->name('page');
-Route::get('contact', [WebsiteController::class, 'contact'])->name('contact.show');
-Route::post('contact', [WebsiteController::class, 'saveContact'])->name('contact.create');
+Route::get('contact', [WebsiteController::class, 'showContactForm'])->name('contact.show');
+Route::post('contact', [WebsiteController::class, 'contact'])->name('contact.create');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 

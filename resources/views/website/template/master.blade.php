@@ -67,7 +67,7 @@
                 @php($pages = getPages())
                 @foreach($pages as $page)
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('pages.show', ['page' => $page->slug,]) }}">{{ $page->title }}</a>
+                    <a class="nav-link" href="{{ url('/page/' . $page->slug) }}">{{ $page->title }}</a>
                 </li>
                 @endforeach
                 <li class="nav-item">

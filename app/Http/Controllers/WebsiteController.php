@@ -52,14 +52,19 @@ class WebsiteController extends Controller
         return view('website.category')->withCategory($category)->withPosts($posts);
     }
 
-    public function page($slug) 
+    public function page($slug)
     {
         $page = $this->postService->findBySlug($slug, 'page');
 
-        if ($page) {
+        if (!$page) {
             abort(404);
         }
 
         return view('website.page')->withPage($page);
+    }
+
+    public function showContactForm()
+    {
+
     }
 }

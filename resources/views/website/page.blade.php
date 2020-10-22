@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Page Header -->
-    <header class="masthead" style="background-image: url({{ $page->thumbnail }})'img/post-bg.jpg')">
+    <header class="masthead" style="background-image: url({{ $page->thumbnail }});">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
