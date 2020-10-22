@@ -21,6 +21,7 @@
         <div class="row">
             <div class="col-lg-8 col-md-8 mx-auto">
                 @foreach($posts as $post)
+                    @if($post instanceof \App\Models\Post)
                     <div class="post-preview">
                         <a href="{{ url('post/' . $post->slug) }}">
                             <h2 class="post-title">
@@ -45,6 +46,7 @@
                         </p>
                     </div>
                     <hr>
+                    @endif
                 @endforeach
 
                 <!-- Pager -->
